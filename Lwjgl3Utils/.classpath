@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="lib" path="libs/lwjgl-assimp.jar"/>
+	<classpathentry kind="lib" path="libs/lwjgl-bgfx.jar"/>
+	<classpathentry kind="lib" path="libs/lwjgl-glfw.jar"/>
+	<classpathentry kind="lib" path="libs/lwjgl-nanovg.jar"/>
+	<classpathentry kind="lib" path="libs/lwjgl-nfd.jar"/>
+	<classpathentry kind="lib" path="libs/lwjgl-nuklear.jar"/>
+	<classpathentry kind="lib" path="libs/lwjgl-openal.jar"/>
+	<classpathentry kind="lib" path="libs/lwjgl-opengl.jar"/>
+	<classpathentry kind="lib" path="libs/lwjgl-par.jar"/>
+	<classpathentry kind="lib" path="libs/lwjgl-stb.jar"/>
+	<classpathentry kind="lib" path="libs/lwjgl-tinyfd.jar"/>
+	<classpathentry kind="lib" path="libs/lwjgl-vulkan.jar"/>
+	<classpathentry kind="lib" path="libs/lwjgl.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Lwjgl3Utils/libs/natives"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="libs/steamworks4j-1.7.0.jar"/>
+	<classpathentry kind="lib" path="libs/lwjgl-openvr.jar"/>
+	<classpathentry kind="lib" path="libs/lwjgl-ovr.jar"/>
+	<classpathentry kind="lib" path="libs/lwjgl-xxhash.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
