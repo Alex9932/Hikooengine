@@ -1,7 +1,6 @@
 package alex9932.engine;
 
 import org.lwjgl.openal.AL11;
-import org.lwjgl.opengl.GL11;
 
 import alex9932.engine.entity.EntityPlayer;
 import alex9932.engine.render.Renderer;
