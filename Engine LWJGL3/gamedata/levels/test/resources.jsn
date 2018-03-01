@@ -1,0 +1,56 @@
+{
+	"models": [
+		{
+			"name": "bunny",
+			"file": "bunny.obj"
+		},
+		{
+			"name": "tree",
+			"file": "pine.obj"
+		}
+	],
+	
+	"textures": [
+		{
+			"name": "default",
+			"file": "default.png"
+		},
+		{
+			"name": "tree_texture",
+			"file": "pine.png"
+		}
+	],
+	
+	"terrains": [
+		{
+			"name": "terrain",
+			"file": "$terrain.jmh",
+			"texture_pack": {
+				"blend": "terrain/blendmap.png",
+				"textures": [
+					"terrain/texture0.png",
+					"terrain/texture1.png",
+					"terrain/texture2.png",
+					"terrain/texture3.png",
+				],
+				"normal_maps": [
+					"terrain/normalmap0.png",
+					"terrain/normalmap1.png",
+					"terrain/normalmap2.png",
+					"terrain/normalmap3.png",
+				]
+			}
+		}
+	],
+	
+	"sounds": [
+		{
+			"name": "bounce",
+			"file": "bounce.ogg"
+		},
+		{
+			"name": "music",
+			"file": "sound.ogg"
+		}
+	]
+}
