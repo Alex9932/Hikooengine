@@ -10,6 +10,7 @@ import alex9932.engine.utils.Resource;
 import alex9932.engine.utils.Scene;
 import alex9932.utils.gl.Shader;
 import alex9932.vecmath.Quaternion;
+import alex9932.vecmath.Vector3f;
 
 public class TerrainRenderer extends Shader{
 	Material material = new Material(new Quaternion(0.0f, 0.0f, 0.0f, 1), new Quaternion(0.0f, 0.0f, 0.0f, 1), new Quaternion(0, 0, 0, 1), 1, 0, 1);
@@ -17,7 +18,7 @@ public class TerrainRenderer extends Shader{
 		super(Resource.getShader("terrain.vs.h"), Resource.getShader("terrain.ps.h"));
 	}
 	
-	public void render(ICamera camera, Scene scene) {
+	public void render(ICamera camera, Scene scene, Fog fog) {
 		this.start();
 		this.loadMatrix4f("proj", camera.getProjectionMatrix());
 		this.loadMatrix4f("view", camera.getViewMatrix());
@@ -40,6 +41,8 @@ public class TerrainRenderer extends Shader{
 		}
 		loadInt("lightsCount", scene.getLights().size());
 		loadMaterial("material", material);
+		
+		loadFog(fog.getColor(), fog.getGradient(), fog.getDensity());
 		
 		ArrayList<Terrain> terrains = scene.getTerrains();
 		for (int i = 0; i < terrains.size(); i++) {
@@ -91,6 +94,10 @@ public class TerrainRenderer extends Shader{
 		this.createUniformLocation("normalmap1");
 		this.createUniformLocation("normalmap2");
 		this.createUniformLocation("normalmap3");
+
+		this.createUniformLocation("skyColor");
+		this.createUniformLocation("density");
+		this.createUniformLocation("gradient");
 		
 		this.createUniformLocation("camera_position");
 		
@@ -102,6 +109,12 @@ public class TerrainRenderer extends Shader{
 		createMaterialUniform("material");
 	}
 
+	public void loadFog(Vector3f color, float gradient, float density) {
+		this.loadFloat("density", density);
+		this.loadFloat("gradient", gradient);
+		this.loadVector("skyColor", color);
+	}
+	
 	public void createPointLightUniform(String uniformName) {
 		createUniformLocation(uniformName + ".base.color");
 		createUniformLocation(uniformName + ".position");

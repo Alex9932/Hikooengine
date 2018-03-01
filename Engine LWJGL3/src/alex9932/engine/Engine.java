@@ -39,8 +39,6 @@ public class Engine {
 	public void start() throws Exception {
 		game.startup();
 		while (!display.isCloseRequested()) {
-			GL11.glClearColor(0.03f, 0.06f, 0.08f, 1);
-			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 			
 			timer.updateTimer();
 			

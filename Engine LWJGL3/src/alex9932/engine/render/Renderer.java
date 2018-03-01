@@ -14,6 +14,7 @@ import alex9932.engine.utils.Resource;
 import alex9932.engine.utils.Scene;
 import alex9932.utils.gl.Display;
 import alex9932.vecmath.Matrix4f;
+import alex9932.vecmath.Vector3f;
 
 public class Renderer {
 	public static final int MAX_POINT_LIGHTS = 40;
@@ -24,6 +25,8 @@ public class Renderer {
 	private Camera camera;
 	private TerrainRenderer terrainRenderer;
 	
+	private Fog fog;
+	
 	private Matrix4f projGui = Matrix4f.createOrthoMatrix(0, 1280, 720, 0, -1, 10);
 	
 	public Renderer(Display display) {
@@ -33,6 +36,8 @@ public class Renderer {
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		//GL11.glEnable(GL11.GL_STENCIL_TEST);
+		
+		this.fog = new Fog(new Vector3f(0.3f, 0.6f, 0.8f), 0.007f, 1.5f);
 		
 		display.getEventSystem().addKeyListener(new KeyListenerImpl(){
 			@Override
@@ -62,10 +67,14 @@ public class Renderer {
 	}
 	
 	public void render(Scene scene, EntityPlayer player) {
-		terrainRenderer.render(camera, scene);
+		GL11.glClearColor(fog.getColor().x, fog.getColor().y, fog.getColor().z, 1);
+		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
+		
+		terrainRenderer.render(camera, scene, fog);
 		shader.start();
 		shader.loadMatrix4f("proj", camera.getProjectionMatrix());
 		shader.loadMatrix4f("view", camera.getViewMatrix());
+		shader.loadFog(fog.getColor(), fog.getGradient(), fog.getDensity());
 
 		for (int i = 0; i < scene.getLights().size(); i++) {
 			shader.loadPointLight("lights[" + i + "]", scene.getLights().get(i));

@@ -7,6 +7,8 @@ in vec2 textureCoord;
 in vec3 pass_normal;
 in vec3 pass_position;
 
+in float visibility;
+
 out vec4 color;
 
 uniform sampler2D texture0;
@@ -20,6 +22,8 @@ uniform sampler2D normalmap2;
 uniform sampler2D normalmap3;
 uniform int lightsCount;
 uniform vec3 camera_position;
+
+uniform vec3 skyColor;
 
 struct BaseLight{
 	vec3 color;
@@ -121,4 +125,6 @@ void main(){
 	}
 
 	color = color_textured * totalLight;
+
+	color = mix(vec4(skyColor, 1), color, visibility);
 }

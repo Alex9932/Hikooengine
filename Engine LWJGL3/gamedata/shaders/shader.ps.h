@@ -6,12 +6,15 @@ in vec2 textureCoords;
 in vec3 pass_normal;
 in vec3 pass_position;
 
+in float visibility;
+
 out vec4 color;
 
 uniform sampler2D textureUnit;
 uniform int lightsCount;
 uniform vec3 camera_position;
 
+uniform vec3 skyColor;
 
 struct BaseLight{
 	vec3 color;
@@ -87,7 +90,7 @@ void main(){
 	if(textureColor.a < 0.5){
 		discard;
 	}
-	
+
 	//Textures and lights
 
 	vec4 totalLight = material.ambient;
@@ -104,4 +107,6 @@ void main(){
 	color = color_textured * totalLight;
 
 	color.a = 1;
+
+	color = mix(vec4(skyColor, 1), color, visibility);
 }

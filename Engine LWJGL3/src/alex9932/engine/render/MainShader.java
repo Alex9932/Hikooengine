@@ -1,6 +1,7 @@
 package alex9932.engine.render;
 
 import alex9932.utils.gl.Shader;
+import alex9932.vecmath.Vector3f;
 
 public class MainShader extends Shader{
 
@@ -21,6 +22,10 @@ public class MainShader extends Shader{
 		this.createUniformLocation("view");
 		this.createUniformLocation("model");
 
+		this.createUniformLocation("skyColor");
+		this.createUniformLocation("density");
+		this.createUniformLocation("gradient");
+
 		this.createUniformLocation("lightsCount");
 		this.createUniformLocation("camera_position");
 		createDirLightUniform("dirLight");
@@ -28,6 +33,12 @@ public class MainShader extends Shader{
 			createPointLightUniform("lights[" + i + "]");
 		}
 		createMaterialUniform("material");
+	}
+	
+	public void loadFog(Vector3f color, float gradient, float density) {
+		this.loadFloat("density", density);
+		this.loadFloat("gradient", gradient);
+		this.loadVector("skyColor", color);
 	}
 
 	public void createPointLightUniform(String uniformName) {
