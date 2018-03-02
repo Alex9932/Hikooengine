@@ -1,10 +1,16 @@
 package alex9932.engine;
 
 import org.lwjgl.glfw.GLFW;
+import org.lwjgl.nanovg.NanoVG;
+import org.lwjgl.opengl.GL11;
 
+import alex9932.engine.entity.Entity;
 import alex9932.engine.render.DirLight;
+import alex9932.engine.render.Mesh;
 import alex9932.engine.render.PointLight;
+import alex9932.engine.utils.FEMLoader;
 import alex9932.engine.utils.Scene;
+import alex9932.utils.NVGUtils;
 import alex9932.vecmath.Vector3f;
 
 public class Main implements IGame{
@@ -26,10 +32,15 @@ public class Main implements IGame{
 			//System.out.println("Loading sounds...");
 			//Source source = SoundSystem.createSource(SoundSystem.getSoundBuffer(Resource.getSound("sound.ogg")), 5, 1, 5);
 			//Source source1 = SoundSystem.createSource(SoundSystem.getSoundBuffer(Resource.getSound("bounce.ogg")), 15, 1, 5);
+
+			System.out.println("------------------------------------");
+			Mesh mesh = new FEMLoader("model.fem").getMesh();
+			System.out.println("------------------------------------");
 			
 			LevelLoader loader = new LevelLoader("test");
 			Scene scene = loader.getScene();
 			engine.setScene(scene);
+			scene.addEntity(new Entity(0, 0, 0, mesh));
 			/**
 			//Load models
 			System.out.println("Loading models...");
@@ -97,6 +108,7 @@ public class Main implements IGame{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		NVGUtils.registerFont("gamedata/textures/fonts/gui.ttf", "font");
 	}
 
 	@Override
@@ -157,6 +169,13 @@ public class Main implements IGame{
 		light1.setPosition(new Vector3f(((float)Math.sin(System.nanoTime()*0.000000001f + 3)*3) + 5, 1, 4));
 		light0.setPosition(new Vector3f(engine.getRenderer().getCamera().getX(), engine.getRenderer().getCamera().getY() + 1.6f, engine.getRenderer().getCamera().getZ()));
 
+		GL11.glDisable(GL11.GL_DEPTH_TEST);
+		GL11.glDisable(GL11.GL_CULL_FACE);
+		NanoVG.nvgBeginFrame(NVGUtils.getVg(), 1280, 720, 1);
+
+		NVGUtils.drawGlowString("Hello, world!", "font", 10, 25, 25, 10);
+		
+		NanoVG.nvgEndFrame(NVGUtils.getVg());
 	}
 
 	@Override

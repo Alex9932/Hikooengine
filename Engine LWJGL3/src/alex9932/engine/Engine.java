@@ -38,16 +38,16 @@ public class Engine {
 	public void start() throws Exception {
 		game.startup();
 		while (!display.isCloseRequested()) {
-			
 			timer.updateTimer();
 			
+			SoundSystem.updateListenerPosition(renderer.getCamera());
+			
+			renderer.render(scene, player);
+
 			for (int i = 0; i < timer.elapsedTicks; ++i){
 				game.loop();
 				scene.update();
 			}
-			SoundSystem.updateListenerPosition(renderer.getCamera());
-			
-			renderer.render(scene, player);
 			
 			display.update();
 		}

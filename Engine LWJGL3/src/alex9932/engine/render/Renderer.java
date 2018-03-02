@@ -69,6 +69,11 @@ public class Renderer {
 	public void render(Scene scene, EntityPlayer player) {
 		GL11.glClearColor(fog.getColor().x, fog.getColor().y, fog.getColor().z, 1);
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
+		GL11.glEnable(GL11.GL_CULL_FACE);
+		GL11.glCullFace(GL11.GL_BACK);
+		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		
 		terrainRenderer.render(camera, scene, fog);
 		shader.start();
