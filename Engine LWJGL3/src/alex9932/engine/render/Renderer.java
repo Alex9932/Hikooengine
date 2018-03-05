@@ -13,6 +13,7 @@ import alex9932.engine.utils.KeyListenerImpl;
 import alex9932.engine.utils.Resource;
 import alex9932.engine.utils.Scene;
 import alex9932.utils.gl.Display;
+import alex9932.utils.gl.Texture;
 import alex9932.vecmath.Matrix4f;
 import alex9932.vecmath.Vector3f;
 
@@ -24,10 +25,13 @@ public class Renderer {
 	private GuiShader guiShader;
 	private Camera camera;
 	private TerrainRenderer terrainRenderer;
+	private SkyboxRenderer skyboxRenderer;
 	
 	private Fog fog;
 	
 	private Matrix4f projGui = Matrix4f.createOrthoMatrix(0, 1280, 720, 0, -1, 10);
+
+	private Texture cubemap;
 	
 	public Renderer(Display display) {
 		GL11.glEnable(GL11.GL_CULL_FACE);
@@ -63,7 +67,13 @@ public class Renderer {
 		camera = new Camera(0, 0, 0, 70, display.getAspect());
 		camera.setOffset(1.6f);
 		
+		cubemap = new Texture(new String[]{
+				Resource.getTexture("skybox/day/posX.png"), Resource.getTexture("skybox/day/negX.png"),
+				Resource.getTexture("skybox/day/posY.png"), Resource.getTexture("skybox/day/negY.png"),
+				Resource.getTexture("skybox/day/posZ.png"), Resource.getTexture("skybox/day/negZ.png")});
+		
 		terrainRenderer = new TerrainRenderer();
+		skyboxRenderer = new SkyboxRenderer();
 	}
 	
 	public void render(Scene scene, EntityPlayer player) {
@@ -74,6 +84,8 @@ public class Renderer {
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		
+		skyboxRenderer.render(camera, fog.getColor(), 0);
 		
 		terrainRenderer.render(camera, scene, fog);
 		shader.start();
@@ -89,8 +101,13 @@ public class Renderer {
 		
 		shader.loadDirLight("dirLight", scene.getDirLight());
 		
+		shader.loadInt("cubemap", 1);
+		
 		ArrayList<Entity> entitys = scene.getEntitys();
-
+		
+		GL13.glActiveTexture(GL13.GL_TEXTURE1);
+		cubemap.bindAsCubeMap();
+		
 		GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, POLYGON_MODE);
 		for (int i = 0; i < entitys.size(); i++) {
 			Mesh mesh = entitys.get(i).getMesh();
@@ -139,5 +156,9 @@ public class Renderer {
 
 	public GuiShader getGuiShader() {
 		return guiShader;
+	}
+
+	public void setQubeMap(Texture cubeMap) {
+		this.cubemap = cubeMap;
 	}
 }

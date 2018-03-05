@@ -37,7 +37,7 @@ public class Texture {
 	}
 	
 	public Texture(String[] path){
-		System.out.print("[Texture] Loading texture: " + path + " ...  ");
+		System.out.print("[Texture] Loading textures: " + path[0] + " ...  ");
 		loadCubeMap(path);
 		System.out.println("OK!");
 	}
@@ -48,6 +48,10 @@ public class Texture {
 
 	public void bind() {
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.id);
+	}
+
+	public void bindAsCubeMap() {
+		GL11.glBindTexture(GL13.GL_TEXTURE_CUBE_MAP, this.id);
 	}
 
 	public void connectTo(int i) {

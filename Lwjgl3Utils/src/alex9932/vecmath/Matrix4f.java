@@ -74,6 +74,10 @@ public class Matrix4f {
 		set(3, 1, y);
 		set(3, 2, z);
 	}
+
+	public void translate(Vector3f position) {
+		this.translate(position.x, position.y, position.z);
+	}
 	
 	//===Scale===//
 	public void scale(float scale) {

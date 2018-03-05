@@ -28,6 +28,9 @@ public class MainShader extends Shader{
 
 		this.createUniformLocation("lightsCount");
 		this.createUniformLocation("camera_position");
+
+		this.createUniformLocation("cubemap");
+		
 		createDirLightUniform("dirLight");
 		for (int i = 0; i < Renderer.MAX_POINT_LIGHTS; i++) {
 			createPointLightUniform("lights[" + i + "]");

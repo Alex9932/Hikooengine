@@ -5,6 +5,8 @@
 in vec2 textureCoords;
 in vec3 pass_normal;
 in vec3 pass_position;
+in vec3 reflectedVector;
+in vec3 camera_position_pass;
 
 in float visibility;
 
@@ -12,9 +14,10 @@ out vec4 color;
 
 uniform sampler2D textureUnit;
 uniform int lightsCount;
-uniform vec3 camera_position;
 
 uniform vec3 skyColor;
+
+uniform samplerCube cubemap;
 
 struct BaseLight{
 	vec3 color;
@@ -99,14 +102,20 @@ void main(){
 	color_textured += textureColor;
 
 	//Light calculation
-	totalLight += calcDirLight(dirLight, pass_position, pass_normal, camera_position);
+	totalLight += calcDirLight(dirLight, pass_position, pass_normal, camera_position_pass);
 	for (int i = 0; i < lightsCount; ++i) {
-		totalLight += calcPointLight(lights[i], pass_position, pass_normal, camera_position);
+		totalLight += calcPointLight(lights[i], pass_position, pass_normal, camera_position_pass);
 	}
 
+	vec4 reflectColor = texture(cubemap, reflectedVector);
+
 	color = color_textured * totalLight;
+
+	color = mix(color, reflectColor, 0.5);
 
 	color.a = 1;
 
 	color = mix(vec4(skyColor, 1), color, visibility);
+
+	color = reflectColor;
 }
