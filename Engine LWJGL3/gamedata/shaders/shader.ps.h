@@ -107,15 +107,12 @@ void main(){
 		totalLight += calcPointLight(lights[i], pass_position, pass_normal, camera_position_pass);
 	}
 
-	vec4 reflectColor = texture(cubemap, reflectedVector);
-
 	color = color_textured * totalLight;
 
-	color = mix(color, reflectColor, 0.5);
+	vec4 reflectColor = texture(cubemap, reflectedVector);
+	color = mix(color, reflectColor, 0.1);
 
 	color.a = 1;
 
 	color = mix(vec4(skyColor, 1), color, visibility);
-
-	color = reflectColor;
 }

@@ -13,7 +13,7 @@ import alex9932.engine.utils.KeyListenerImpl;
 import alex9932.engine.utils.Resource;
 import alex9932.engine.utils.Scene;
 import alex9932.utils.gl.Display;
-import alex9932.utils.gl.Texture;
+import alex9932.utils.gl.texture.Texture;
 import alex9932.vecmath.Matrix4f;
 import alex9932.vecmath.Vector3f;
 
@@ -32,6 +32,8 @@ public class Renderer {
 	private Matrix4f projGui = Matrix4f.createOrthoMatrix(0, 1280, 720, 0, -1, 10);
 
 	private Texture cubemap;
+	
+	private float time;
 	
 	public Renderer(Display display) {
 		GL11.glEnable(GL11.GL_CULL_FACE);
@@ -85,7 +87,7 @@ public class Renderer {
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		
-		skyboxRenderer.render(camera, fog.getColor(), 0);
+		skyboxRenderer.render(camera, fog.getColor(), 2.5f);
 		
 		terrainRenderer.render(camera, scene, fog);
 		shader.start();
@@ -160,5 +162,9 @@ public class Renderer {
 
 	public void setQubeMap(Texture cubeMap) {
 		this.cubemap = cubeMap;
+	}
+	
+	public void tickTime() {
+		this.time += 0.001f;
 	}
 }

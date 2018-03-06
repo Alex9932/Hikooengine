@@ -94,7 +94,7 @@ public class Main implements IGame{
 			**/
 
 			
-			DirLight dirLight = new DirLight(new Vector3f(1, 1, 1), new Vector3f(-1, -1, -1), 0.1f);
+			DirLight dirLight = new DirLight(new Vector3f(1, 1, 1), new Vector3f(-1, -1, -1), 0.5f);
 			engine.getScene().setDirLight(dirLight);
 			
 			light = new PointLight(new Vector3f(0, 1, 0), new Vector3f(0, 0.5f, 1), 5f, 1, 1, 1);

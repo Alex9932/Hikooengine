@@ -9,6 +9,6 @@ uniform mat4 view;
 uniform mat4 model;
 
 void main(void){
-	gl_Position = proj * view * model * vec4(position, 1.0); 
+	gl_Position = proj * view * model * vec4(position, 1.0);
 	textureCoords = position;
 }

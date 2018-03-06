@@ -1,6 +1,6 @@
 package alex9932.engine;
 
-import alex9932.utils.gl.Texture;
+import alex9932.utils.gl.texture.Texture;
 
 public class TerrainTexture {
 	public Texture texture0;

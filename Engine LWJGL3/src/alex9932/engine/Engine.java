@@ -47,6 +47,7 @@ public class Engine {
 			for (int i = 0; i < timer.elapsedTicks; ++i){
 				game.loop();
 				scene.update();
+				renderer.tickTime();
 			}
 			
 			display.update();

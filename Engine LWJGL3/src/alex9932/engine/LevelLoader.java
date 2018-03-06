@@ -18,7 +18,7 @@ import alex9932.engine.sound.Source;
 import alex9932.engine.utils.OBJLoader;
 import alex9932.engine.utils.Resource;
 import alex9932.engine.utils.Scene;
-import alex9932.utils.gl.Texture;
+import alex9932.utils.gl.texture.Texture;
 import alex9932.vecmath.Quaternion;
 
 public class LevelLoader {

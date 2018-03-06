@@ -4,10 +4,11 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
 
+import alex9932.engine.utils.Resource;
 import alex9932.utils.gl.Shader;
-import alex9932.utils.gl.Texture;
 import alex9932.utils.gl.Vao;
 import alex9932.utils.gl.Vbo;
+import alex9932.utils.gl.texture.Texture;
 import alex9932.vecmath.Matrix4f;
 import alex9932.vecmath.Vector3f;
 
@@ -68,13 +69,13 @@ public class SkyboxRenderer extends Shader{
 		vao.put(new Vbo(0, 3, VERTICES));
 
 		skyboxTextureDay = new Texture(new String[]{
-				"./gamedata/textures/skybox/day/posX.png", "./gamedata/textures/skybox/day/negX.png",
-				"./gamedata/textures/skybox/day/posY.png", "./gamedata/textures/skybox/day/negY.png",
-				"./gamedata/textures/skybox/day/posZ.png", "./gamedata/textures/skybox/day/negZ.png"});
+				Resource.getTexture("skybox/day/posX.png"), Resource.getTexture("skybox/day/negX.png"),
+				Resource.getTexture("skybox/day/posY.png"), Resource.getTexture("skybox/day/negY.png"),
+				Resource.getTexture("skybox/day/posZ.png"), Resource.getTexture("skybox/day/negZ.png")});
 		skyboxTextureNight = new Texture(new String[]{
-				"./gamedata/textures/skybox/night/posX.png", "./gamedata/textures/skybox/night/negX.png",
-				"./gamedata/textures/skybox/night/posY.png", "./gamedata/textures/skybox/night/negY.png",
-				"./gamedata/textures/skybox/night/posZ.png", "./gamedata/textures/skybox/night/negZ.png"});
+				Resource.getTexture("skybox/night/posX.png"), Resource.getTexture("skybox/night/negX.png"),
+				Resource.getTexture("skybox/night/posY.png"), Resource.getTexture("skybox/night/negY.png"),
+				Resource.getTexture("skybox/night/posZ.png"), Resource.getTexture("skybox/night/negZ.png")});
 	}
 	
 	public void render(ICamera camera, Vector3f fogColor, float time) {
@@ -91,9 +92,9 @@ public class SkyboxRenderer extends Shader{
 		this.loadFloat("time", time);
 
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
-		GL11.glBindTexture(GL13.GL_TEXTURE_CUBE_MAP, skyboxTextureDay.getId());
+		skyboxTextureDay.bindAsCubeMap();
 		GL13.glActiveTexture(GL13.GL_TEXTURE1);
-		GL11.glBindTexture(GL13.GL_TEXTURE_CUBE_MAP, skyboxTextureNight.getId());
+		skyboxTextureNight.bindAsCubeMap();
 		GL20.glEnableVertexAttribArray(0);
 		GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, VERTICES.length / 3);
 		GL20.glDisableVertexAttribArray(0);

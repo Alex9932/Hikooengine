@@ -3,7 +3,7 @@ package alex9932.engine.render;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 
-import alex9932.utils.gl.Texture;
+import alex9932.utils.gl.texture.Texture;
 
 public class GL {
 	private static final String TExTURE_PATH = "gamedata/textures/";
