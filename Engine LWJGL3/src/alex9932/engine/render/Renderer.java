@@ -33,7 +33,7 @@ public class Renderer {
 
 	private Texture cubemap;
 	
-	private float time;
+	public float time;
 	
 	public Renderer(Display display) {
 		GL11.glEnable(GL11.GL_CULL_FACE);

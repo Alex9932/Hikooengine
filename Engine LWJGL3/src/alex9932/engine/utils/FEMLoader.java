@@ -13,7 +13,7 @@ public class FEMLoader {
 	private static final int NORMALS = 0x02;
 	private static final int TEXTURE_COORDS = 0x03;
 	private static final int INDICES = 0x04;
-	private static final int SEPARATOR = 0x05;
+	//private static final int SEPARATOR = 0x05;
 	private static final int EOB = 0xFE;
 	private static final int EOF = 0xFF;
 	private Mesh mesh;
