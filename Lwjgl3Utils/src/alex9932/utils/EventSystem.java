@@ -143,6 +143,18 @@ public class EventSystem {
 	public float getMouseDY() {
 		return (float)dy;
 	}
+	
+	public int getWidth() {
+		int[] w = new int[1];
+		GLFW.glfwGetWindowSize(window, w, null);
+		return w[0];
+	}
+	
+	public int getHeight() {
+		int[] h = new int[1];
+		GLFW.glfwGetWindowSize(window, null, h);
+		return h[0];
+	}
 
 	public boolean isKeyDown(int key) {
 		for (int i = 0; i < keysDown.size(); i++) {
@@ -155,6 +167,9 @@ public class EventSystem {
 
 	public void setGrabbed(boolean grab) {
 		if(grab){
+			int[] xpos = new int[1], ypos = new int[1];
+			GLFW.glfwGetWindowPos(window, xpos, ypos);
+			GLFW.glfwSetCursorPos(window, xpos[0] + (getWidth() / 2), ypos[0] + (getHeight() / 2));
 			GLFW.glfwSetInputMode(window, GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_DISABLED);
 		}else{
 			GLFW.glfwSetInputMode(window, GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_NORMAL);

@@ -8,7 +8,7 @@ import org.lwjgl.opengl.GL11;
 import alex9932.utils.NVGUtils;
 import alex9932.utils.gl.Display;
 import alex9932.utils.gl.Shader;
-import alex9932.utils.gl.Texture;
+import alex9932.utils.gl.texture.Texture;
 import alex9932.vecmath.Matrix4f;
 
 public class Main {

@@ -1,13 +1,7 @@
-package alex9932.utils.gl;
+package alex9932.utils.gl.texture;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.nio.ByteBuffer;
 
-import javax.imageio.ImageIO;
-
-import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 import org.lwjgl.opengl.GL13;
@@ -15,6 +9,8 @@ import org.lwjgl.opengl.GL14;
 import org.lwjgl.opengl.GL30;
 
 public class Texture {
+	private static final ITextureDecoder DEFAULT_DECODER = new DefaultTextureDecoder();
+	
 	public static final int REPEAT = GL11.GL_REPEAT;
 	public static final int CLAMP_TO_EDGE = GL12.GL_CLAMP_TO_EDGE;
 	private int id;
@@ -26,19 +22,35 @@ public class Texture {
 	}
 
 	public Texture(String path){
-		this(path, GL12.GL_CLAMP_TO_EDGE);
+		this(path, DEFAULT_DECODER, GL12.GL_CLAMP_TO_EDGE);
+	}
+
+	public Texture(String path, ITextureDecoder decoder){
+		this(path, decoder, GL12.GL_CLAMP_TO_EDGE);
+	}
+
+	public Texture(String path, int glMode) {
+		this(path, DEFAULT_DECODER, glMode);
 	}
 	
-	public Texture(String path, int glMode) {
+	public Texture(String path, ITextureDecoder decoder, int glMode) {
 		System.out.print("[Texture] Loading texture: " + path + " ...  ");
-		ByteBuffer data = decodeTextureFile(path);
-		loadToGL(width, height, data, glMode);
+		TextureData data = decodeTextureFile(path, decoder);
+		this.width = data.width;
+		this.height = data.height;
+		loadToGL(data.width, data.height, data.data, glMode);
 		System.out.println("OK!");
 	}
+
+	public Texture(String[] paths){
+		this(paths, DEFAULT_DECODER);
+	}
 	
-	public Texture(String[] path){
-		System.out.print("[Texture] Loading textures: " + path[0] + " ...  ");
-		loadCubeMap(path);
+	public Texture(String[] paths, ITextureDecoder decoder){
+		System.out.print("[Texture] Loading textures: " + paths[0] + " ...  ");
+		this.width = 128;
+		this.height = 128;
+		loadCubeMap(paths, decoder);
 		System.out.println("OK!");
 	}
 
@@ -62,6 +74,14 @@ public class Texture {
 		connectTo(i);
 		bind();
 	}
+	
+	public int getWidth() {
+		return width;
+	}
+	
+	public int getHeight() {
+		return height;
+	}
 
 	private void loadToGL(int width, int height, ByteBuffer buffer, int glMode) {
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
@@ -78,48 +98,32 @@ public class Texture {
 		GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL14.GL_TEXTURE_LOD_BIAS, 0.4f);
 	}
 	
-	public int loadCubeMap(String[] textureFiles) {
-		int texID = GL11.glGenTextures();
-		GL13.glActiveTexture(GL13.GL_TEXTURE0);
-		GL11.glBindTexture(GL13.GL_TEXTURE_CUBE_MAP, texID);
-
-		for (int i = 0; i < textureFiles.length; i++) {
-			ByteBuffer data = decodeTextureFile(textureFiles[i]);
-			GL11.glTexImage2D(GL13.GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL11.GL_RGBA, width, height, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, data);
-		}
+	public void loadCubeMap(String[] textureFiles, ITextureDecoder decoder) {
+		GL11.glEnable(GL13.GL_TEXTURE_CUBE_MAP);
+		this.id = GL11.glGenTextures();
+		this.bindAsCubeMap();
 		
 		GL11.glTexParameteri(GL13.GL_TEXTURE_CUBE_MAP, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
 		GL11.glTexParameteri(GL13.GL_TEXTURE_CUBE_MAP, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
 		GL11.glTexParameteri(GL13.GL_TEXTURE_CUBE_MAP, GL11.GL_TEXTURE_WRAP_S, GL12.GL_CLAMP_TO_EDGE);
 		GL11.glTexParameteri(GL13.GL_TEXTURE_CUBE_MAP, GL11.GL_TEXTURE_WRAP_T, GL12.GL_CLAMP_TO_EDGE);
-		return texID;
+
+		for (int i = 0; i < textureFiles.length; i++) {
+			TextureData data = decodeTextureFile(textureFiles[i], decoder);
+			GL11.glTexImage2D(GL13.GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL11.GL_RGBA, data.width, data.height, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, data.data);
+		}
+
+
+		GL30.glGenerateMipmap(GL11.GL_TEXTURE_2D);
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR_MIPMAP_LINEAR);
+		GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL14.GL_TEXTURE_LOD_BIAS, 0.4f);
 	}
 
-	private ByteBuffer decodeTextureFile(String path) {
-
+	private TextureData decodeTextureFile(String path, ITextureDecoder decoder) {
 		try {
-			BufferedImage image = ImageIO.read(new File(path));
-			this.width = image.getWidth();
-			this.height = image.getHeight();
-			
-			byte[] pixels = new byte[width * height * 4];
-			int i = 0;
-			for (int y = 0; y < height; y++) {
-				for (int x = 0; x < width; x++) {
-					int color = image.getRGB(x, y);
-					pixels[(i * 4) + 0] = (byte)((color >> 16) & 0xFF);
-					pixels[(i * 4) + 1] = (byte)((color >> 8) & 0xFF);
-					pixels[(i * 4) + 2] = (byte)(color & 0xFF);
-					pixels[(i * 4) + 3] = (byte)((color >> 24) & 0xFF);
-					i++;
-				}
-			}
-
-			ByteBuffer buffer = BufferUtils.createByteBuffer(pixels.length);
-			buffer.put(pixels);
-			buffer.flip();
-			return buffer;
-		} catch (IOException e) {
+			TextureData data = decoder.decode(path);
+			return data;
+		} catch (Exception e) {
 			System.out.println("FAILED!");
 			e.printStackTrace();
 		}
