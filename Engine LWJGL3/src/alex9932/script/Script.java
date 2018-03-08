@@ -8,10 +8,11 @@ import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
+import alex9932.engine.Event;
 import alex9932.utils.IKeyListener;
 import alex9932.utils.IMouseListener;
 
-public class Script implements IKeyListener, IMouseListener{
+public class Script implements IKeyListener, IMouseListener, IEventHandler{
 	private Invocable inv;
 	private ArrayList<String> keyPrsdCallBacks = new ArrayList<String>();
 	private ArrayList<String> keyRelCallBacks = new ArrayList<String>();
@@ -19,6 +20,7 @@ public class Script implements IKeyListener, IMouseListener{
 	private ArrayList<String> clickCallBacks = new ArrayList<String>();
 	private ArrayList<String> moveCallBacks = new ArrayList<String>();
 	private ArrayList<String> dragCallBacks = new ArrayList<String>();
+	private ArrayList<String> onloadEventCallBacks = new ArrayList<String>();
 
 	public Script(ScriptsEngine scriptsEngine, String src) throws Exception {
 		ScriptEngine js = new ScriptEngineManager().getEngineByName("javascript");
@@ -59,6 +61,10 @@ public class Script implements IKeyListener, IMouseListener{
 	
 	public void addDragCallBack(String function) {
 		dragCallBacks.add(function);
+	}
+	
+	public void addOnloadEvent(String function) {
+		onloadEventCallBacks.add(function);
 	}
 	
 	public void invoke(String func) throws Exception {
@@ -138,5 +144,46 @@ public class Script implements IKeyListener, IMouseListener{
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	@Override
+	public void onLoadEvent(String level) {
+		for (int i = 0; i < onloadEventCallBacks.size(); i++) {
+			try {
+				invoke(onloadEventCallBacks.get(i), level);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	@Override
+	public void startLoadLevelEvent(String level) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void endLoadLevelEvent(String level) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void startupEvent(String level) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void shutdownEvent(String level) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void handle(Event event) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -2,7 +2,7 @@
 	"models": [
 		{
 			"name": "bunny",
-			"file": "barrel.obj"
+			"file": "bunny.obj"
 		},
 		{
 			"name": "tree",
@@ -13,7 +13,7 @@
 	"textures": [
 		{
 			"name": "default",
-			"file": "barrel.png"
+			"file": "default.png"
 		},
 		{
 			"name": "tree_texture",

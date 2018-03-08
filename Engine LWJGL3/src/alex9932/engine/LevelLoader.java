@@ -54,14 +54,6 @@ public class LevelLoader {
 		//load sounds
 		System.out.println("Loading sounds...");
 		loadSounds();
-		//creating scene
-		System.out.println("Dene loading!");
-		loadScene();
-		//Cleaning
-		models.clear();
-		terrains.clear();
-		textures.clear();
-		sounds.clear();
 	}
 
 	private void readAllspawn() {
@@ -267,6 +259,14 @@ public class LevelLoader {
 	}
 	
 	public Scene getScene() {
+		//creating scene
+		System.out.println("Dene loading!");
+		loadScene();
+		//Cleaning
+		models.clear();
+		terrains.clear();
+		textures.clear();
+		sounds.clear();
 		return scene;
 	}
 }

@@ -40,6 +40,7 @@ public class ScriptsEngine {
 				
 				engine.getDisplay().getEventSystem().addKeyListener(script);
 				engine.getDisplay().getEventSystem().addMouseListener(script);
+				engine.getEventSystem().addEventHandler(script);
 				scripts.put(array.getString(i), script);
 			}
 			for (int i = 0; i < array.length(); i++) {

@@ -1,9 +1,9 @@
 function levelLoaded(sLevelName) {
-	
+	print("Loading level: " + sLevelName);
 }
 
 function construct() {
-	script.addOnloadEvent("levelLoaded");
+	script.get("main.js").addOnloadEvent("levelLoaded");
 }
 
 function destruct() {

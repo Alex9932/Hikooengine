@@ -18,6 +18,7 @@ public class Engine {
 	private IGame game;
 	private EntityPlayer player;
 	private ScriptsEngine scriptEngine;
+	private EventSystem event;
 	
 	public Engine() throws Exception{
 		display = new Display(1280, 720, "Hikooengine");
@@ -26,6 +27,7 @@ public class Engine {
 		scene = new Scene();
 		player = new EntityPlayer(0, 0, 0);
 		scene.addEntity(player);
+		event = new EventSystem();
 		scriptEngine = new ScriptsEngine(this, renderer.getGuiShader());
 		SoundSystem.init();
 		SoundSystem.setAttenuationModel(AL11.AL_EXPONENT_DISTANCE);
@@ -58,6 +60,15 @@ public class Engine {
 		SoundSystem.cleanUp();
 	}
 	
+	public void loadLevel(String level) {
+		event.sendSignal(Event.START_LOAD_LEVEL);
+		LevelLoader loader = new LevelLoader("test");
+		event.sendSignal(Event.ON_LOAD_EVENT);
+		scene = loader.getScene();
+		event.sendSignal(Event.END_LOAD_LEVEL);
+		scene.addEntity(player);
+	}
+	
 	public Scene getScene() {
 		return scene;
 	}
@@ -87,5 +98,9 @@ public class Engine {
 	public void setScene(Scene scene) {
 		this.scene = scene;
 		scene.addEntity(player);
+	}
+
+	public EventSystem getEventSystem() {
+		return event;
 	}
 }
