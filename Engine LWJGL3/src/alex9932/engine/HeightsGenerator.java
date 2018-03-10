@@ -2,6 +2,7 @@ package alex9932.engine;
 
 import java.util.Random;
 
+// Terrain heights generator
 public class HeightsGenerator {
 
 	private static final float AMPLITUDE = 1f;

@@ -68,7 +68,7 @@ vec4 calcLight(BaseLight base, vec3 worldPos, vec3 camPos, vec3 direction, vec3 
 			specularColor = vec4(base.color, 1) * material.reflectance * specularFactor;
 		}
 	}
-	return diffuseColor + specularColor * base.intensity * 0.02;
+	return diffuseColor + specularColor * base.intensity * 0.002;
 }
 
 vec4 calcDirLight(DirectionalLight light, vec3 worldPos, vec3 normal, vec3 camPos) {

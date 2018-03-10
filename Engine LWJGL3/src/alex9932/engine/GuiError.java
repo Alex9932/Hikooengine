@@ -23,6 +23,7 @@ import alex9932.script.FileIO;
 import javax.swing.ImageIcon;
 import javax.swing.JTextPane;
 
+// Error screen
 public class GuiError extends JFrame {
 	private static final long serialVersionUID = 2050240814470613218L;
 	private Button button;
@@ -121,7 +122,7 @@ public class GuiError extends JFrame {
 		
 		JLabel label = new JLabel("");
 		label.setBounds(10, 11, 38, 32);
-		label.setIcon(new ImageIcon(GuiError.class.getResource("/alex9932/engine/util/crash.png")));
+		label.setIcon(new ImageIcon(GuiError.class.getResource("/alex9932/engine/crash.png")));
 		getContentPane().add(label);
 		
 		JTextPane txtpn = new JTextPane();

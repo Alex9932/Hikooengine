@@ -9,6 +9,7 @@ import alex9932.engine.render.PointLight;
 import alex9932.utils.NVGUtils;
 import alex9932.vecmath.Vector3f;
 
+// IGame.java implementation
 public class Game implements IGame{
 	private Engine engine;
 	private PointLight light;

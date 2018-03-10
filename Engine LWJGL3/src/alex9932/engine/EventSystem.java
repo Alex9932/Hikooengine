@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import alex9932.script.IEventHandler;
 
+// Simple event system
+
 public class EventSystem {
 	private ArrayList<IEventHandler> eventHandlers = new ArrayList<IEventHandler>();
 	
