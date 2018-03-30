@@ -129,4 +129,14 @@ public class Texture {
 		}
 		return null;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Texture){
+			Texture tex = (Texture)obj;
+			return (tex.id == this.id);
+		}else{
+			return false;
+		}
+	}
 }

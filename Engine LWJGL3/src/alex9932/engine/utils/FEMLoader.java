@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 
-import alex9932.engine.render.Mesh;
+import alex9932.utils.Mesh;
 
 public class FEMLoader {
 	private static final int HEADER = 0x00;

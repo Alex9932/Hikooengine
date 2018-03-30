@@ -1,4 +1,4 @@
-package alex9932.engine.render;
+package alex9932.utils.gl;
 
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
@@ -8,8 +8,6 @@ import org.lwjgl.opengl.GL12;
 import org.lwjgl.opengl.GL14;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.opengl.GL32;
-
-import alex9932.utils.gl.Display;
 
 public class Fbo {
 	private int fbo;

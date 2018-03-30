@@ -1,4 +1,4 @@
-package alex9932.engine.render;
+package alex9932.utils;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;

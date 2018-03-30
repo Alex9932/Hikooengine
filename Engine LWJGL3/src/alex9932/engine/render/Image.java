@@ -3,6 +3,7 @@ package alex9932.engine.render;
 import org.lwjgl.opengl.GL11;
 
 import alex9932.utils.gl.Display;
+import alex9932.utils.gl.Fbo;
 
 public class Image {
 	private Fbo fbo;

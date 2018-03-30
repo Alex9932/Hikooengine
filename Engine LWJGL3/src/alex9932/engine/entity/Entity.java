@@ -2,7 +2,7 @@ package alex9932.engine.entity;
 
 import alex9932.engine.Terrain;
 import alex9932.engine.render.Material;
-import alex9932.engine.render.Mesh;
+import alex9932.utils.Mesh;
 import alex9932.utils.gl.texture.Texture;
 import alex9932.vecmath.Matrix4f;
 import alex9932.vecmath.Quaternion;

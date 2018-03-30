@@ -11,13 +11,13 @@ import org.json.JSONObject;
 
 import alex9932.engine.entity.Entity;
 import alex9932.engine.render.Material;
-import alex9932.engine.render.Mesh;
 import alex9932.engine.sound.Buffer;
 import alex9932.engine.sound.SoundSystem;
 import alex9932.engine.sound.Source;
-import alex9932.engine.utils.OBJLoader;
 import alex9932.engine.utils.Resource;
 import alex9932.engine.utils.Scene;
+import alex9932.utils.Mesh;
+import alex9932.utils.OBJLoader;
 import alex9932.utils.gl.texture.Texture;
 import alex9932.vecmath.Quaternion;
 

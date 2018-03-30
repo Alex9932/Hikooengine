@@ -59,11 +59,16 @@ public class Matrix4f {
 	}
 
 	public static Matrix4f createModelMatrix(float x, float y, float z, float anglex, float angley, float scale) {
+		return createModelMatrix(x, y, z, anglex, angley, 0, scale);
+	}
+	
+	public static Matrix4f createModelMatrix(float x, float y, float z, float anglex, float angley, float anglez, float scale) {
 		Matrix4f model = new Matrix4f();
 		model.setIdentity();
 		model.translate(x, y, z);
 		model.rotateY((float)Math.toRadians(anglex));
 		model.rotateX((float)Math.toRadians(angley));
+		model.rotateZ((float)Math.toRadians(anglez));
 		model.scale(scale);
 		return model;
 	}

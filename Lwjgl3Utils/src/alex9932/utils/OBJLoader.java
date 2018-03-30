@@ -1,4 +1,4 @@
-package alex9932.engine.utils;
+package alex9932.utils;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import alex9932.engine.render.Mesh;
 import alex9932.vecmath.Vector2f;
 import alex9932.vecmath.Vector3f;
 
