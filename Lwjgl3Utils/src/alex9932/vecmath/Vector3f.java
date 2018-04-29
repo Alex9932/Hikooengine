@@ -19,9 +19,11 @@ public class Vector3f {
 	
 	public void normalize() {
 		float d = length();
-		this.x /= d;
-		this.y /= d;
-		this.z /= d;
+		if (d != 0) {
+			this.x /= d;
+			this.y /= d;
+			this.z /= d;
+		}
 	}
 	
 	public void rotate(float angle){

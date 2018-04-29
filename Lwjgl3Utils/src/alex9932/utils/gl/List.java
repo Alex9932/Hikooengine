@@ -24,4 +24,8 @@ public class List {
 	public int getList() {
 		return list;
 	}
+
+	public void remove() {
+		GL11.glDeleteLists(list, 1);
+	}
 }

@@ -12,6 +12,7 @@ public class EventSystem {
 	private ArrayList<IKeyListener> keyListeners = new ArrayList<IKeyListener>();
 	private ArrayList<IMouseListener> mouseListeners = new ArrayList<IMouseListener>();
 	private ArrayList<Integer> keysDown = new ArrayList<Integer>();
+	private ArrayList<Integer> buttonsDown = new ArrayList<Integer>();
 	private long window;
 	
 	private double x, y, oldx, oldy;
@@ -44,6 +45,12 @@ public class EventSystem {
 		GLFW.glfwSetMouseButtonCallback(window, new GLFWMouseButtonCallbackI() {
 			@Override
 			public void invoke(long window, int key, int action, int hz) {
+				if(action == GLFW.GLFW_PRESS){
+					buttonsDown.add((Integer)key);
+				}else if(action == GLFW.GLFW_RELEASE){
+					buttonsDown.remove((Integer)key);
+				}
+				
 				double[] xpos = new double[1];
 				double[] ypos = new double[1];
 				GLFW.glfwGetCursorPos(window, xpos, ypos);
@@ -175,5 +182,22 @@ public class EventSystem {
 			GLFW.glfwSetInputMode(window, GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_NORMAL);
 		}
 		this.isGrabbed = grab;
+	}
+
+	public double getMouseX() {
+		return x;
+	}
+
+	public double getMouseY() {
+		return y;
+	}
+
+	public boolean isButtonDown(int button) {
+		for (int i = 0; i < buttonsDown.size(); i++) {
+			if(buttonsDown.get(i) == button){
+				return true;
+			}
+		}
+		return false;
 	}
 }
